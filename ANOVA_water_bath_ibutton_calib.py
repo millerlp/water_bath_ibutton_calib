@@ -21,7 +21,7 @@ import os # for checking file paths
 import csv # for writing csv output
 
 # Create a vector of temperatures that the calibration ramp will stop at.
-calib_temps = [6,10,15,20,25,30,35,40]
+calib_temps = [5,10,15,20,25,30,35,40]
 
 # Establish serial communications with the water bath. ANOVA instructions
 # recommend 9600 baud, 8-N-1, no flow control. No linefeeds (\n) should be
@@ -85,6 +85,9 @@ print "+++++++++++++++++++++++++++++"
 print "Ramp will start at %1f C" % init_temp
 print "+++++++++++++++++++++++++++++"
 
+bath.write("start\r")
+response = bath.readlines()
+time.sleep(5)
 
 
 while flag != True:
@@ -96,12 +99,15 @@ while flag != True:
     time.sleep(0.01)
     # Now check that the set point worked
     bath.write("get temp setting\r")
+    response = bath.readlines()
     # The response here will need to be parsed to remove the echoed
     # command. It will look like ['get temp setting\r 21.00\r']
     response = float(re.search(r'[0-9.]{4,}',response[0]).group())
     if (abs(response - init_temp) < 0.001):
         print "Setpoint set: %2.2f C" % response
         flag = True  # set True to kill while loop
+
+    
             
 # Next we need to wait around for the water bath to get to the initial 
 # temperature.         
@@ -125,12 +131,13 @@ print "****************************************************"
 print "****************************************************"
 print "Initial temperature %2.2f C reached" % init_temp
 print ""
+junk = raw_input("Press return to start temperature ramp") # pauses here
 print "Starting temperature ramp"
 print "****************************************************"
 
 ################################################################################
 # open a csv file to output the temperatures and time stamps
-fname = time.strftime("%Y%m%d_%H%M",time.localtime()) + "_iButton_calib_times" +  + ".csv"
+fname = time.strftime("%Y%m%d_%H%M",time.localtime()) + "_iButton_calib_times"  + ".csv"
     
 outputfile = open(fname,'wb') # opens file
 # Create writer object, use as writer.writerow(data) later on
@@ -147,6 +154,8 @@ for i in range(len(calib_temps)):
     command = "set temp " + "%2.2f\r" % current_set # assemble command
     bath.write(command) # change set point
     response = bath.readline() # clear buffer response from bath
+    # Notify user of current target setpoint
+    print "Current set point: %2.2f C" % current_set
     
     flag = False # set initial flag
     while flag != True:
@@ -181,6 +190,8 @@ dirname = os.getcwd() # get current working directory
 print "Timestamps saved to %s\%s" % (dirname,fname)         
          
 junk = raw_input("Press return to quit")
+bath.write("stop\r")
+response = bath.readlines()
 bath.close()         
          
     
