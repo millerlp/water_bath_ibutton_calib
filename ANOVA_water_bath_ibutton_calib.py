@@ -157,6 +157,7 @@ for i in range(len(calib_temps)):
     # Notify user of current target setpoint
     print "Current set point: %2.2f C" % current_set
     
+        # Loop until the temperature gets close to the target temperature
     flag = False # set initial flag
     while flag != True:
         time.sleep(2)
@@ -182,11 +183,11 @@ for i in range(len(calib_temps)):
         # in the form ['temp\r 21.46\r']
         response = float(re.search(r'[0-9.]{4,}',response[0]).group())
         # Check that temperature is still close to current_set temperature        
-        if (abs(current_set - response) < 0.05):
+        if (abs(current_set - response) <= 0.03):
                 checkCounter = checkCounter + 1
                 if checkCounter > 18: # 18 10-second sleeps = 3 minutes
                         flag = True # set True to kill while loop
-        else if (abs(current_set - response) > 0.05):
+        elif (abs(current_set - response) > 0.03):
                 checkCounter = 0 # Reset if temperature has drifted
 
 
