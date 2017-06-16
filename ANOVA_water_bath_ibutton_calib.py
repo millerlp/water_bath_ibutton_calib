@@ -82,7 +82,7 @@ flag = False  # set the while-loop flag
 init_temp = 5 # define the initial temperature, degrees Celsius
 
 print "+++++++++++++++++++++++++++++"
-print "Ramp will start at %1f C" % init_temp
+print "Ramp will start at %1.0f C" % init_temp
 print "+++++++++++++++++++++++++++++"
 
 bath.write("start\r")
