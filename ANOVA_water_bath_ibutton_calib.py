@@ -174,7 +174,7 @@ for i in range(len(calib_temps)):
         # print "Current bath temp: %2.2f C" % response
         # When the bath temperature gets within 0.05 of the target, we're 
         # close enough
-        if (abs(current_set - response) < 0.03):
+        if (abs(current_set - response) < 0.05):
             flag = True  # set True to kill while loop
     
     flag = False
@@ -188,12 +188,12 @@ for i in range(len(calib_temps)):
         # in the form ['temp\r 21.46\r']
         response = float(re.search(r'[0-9.]{4,}',response[0]).group())
         # Check that temperature is still close to current_set temperature        
-        if (abs(current_set - response) <= 0.03):
+        if (abs(current_set - response) <= 0.05):
                 checkCounter = checkCounter + 1
                 print "Stable at %2.2f C" % response
                 if checkCounter > 18: # 18 10-second sleeps = 3 minutes
                         flag = True # set True to kill while loop
-        elif (abs(current_set - response) > 0.03):
+        elif (abs(current_set - response) > 0.05):
                 checkCounter = 0 # Reset if temperature has drifted
                 print "Waiting to re-stabilize at %2.2f C" % current_set
 
