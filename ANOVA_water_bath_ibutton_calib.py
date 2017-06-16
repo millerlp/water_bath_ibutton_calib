@@ -127,6 +127,7 @@ while flag != True:
     # close enough
     if (abs(init_temp - response) < 0.05):
         flag = True  # set True to kill while loop
+
 # The script will now hold at the initial temperature until the user 
 # tells it to begin ramping the temperature to the target_temp.
 print "****************************************************"
