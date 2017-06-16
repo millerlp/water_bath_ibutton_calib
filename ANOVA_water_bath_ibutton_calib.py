@@ -164,7 +164,7 @@ for i in range(len(calib_temps)):
     
         # Loop until the temperature gets close to the target temperature
     flag = False # set initial flag
-    oldtime = time.localtime()
+    oldtime = time.time() # get time since epoch, in seconds
     while flag != True:
         time.sleep(2)
         bath.write("temp\r") # Query current bath temperature
@@ -177,8 +177,9 @@ for i in range(len(calib_temps)):
         # close enough
         if (abs(current_set - response) < 0.05):
             flag = True  # set True to kill while loop
-        if ( (time.localtime() - oldtime ) > 15):
-                oldtime = time.localtime() # update oldtime
+        # Check to see if 15 seconds have elapsed since last printed update
+        if ( (time.time() - oldtime ) > 15):
+                oldtime = time.time() # update oldtime
                 print "Current temp: %2.2f, time: %s" % (response,oldtime)
     
     flag = False
