@@ -180,7 +180,7 @@ for i in range(len(calib_temps)):
         # Check to see if 15 seconds have elapsed since last printed update
         if ( (time.time() - oldtime ) > 15):
                 oldtime = time.time() # update oldtime
-                print "Current temp: %2.2f, time: %s" % (response,oldtime)
+                print "Current temp: %2.2f, time: %s" % (response,time.strftime("%H:%M:%S", time.localtime())
     
     flag = False
     checkCounter = 0
