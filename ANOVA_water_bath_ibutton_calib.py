@@ -106,6 +106,7 @@ while flag != True:
     if (abs(response - init_temp) < 0.001):
         print "Setpoint set: %2.2f C" % response
         flag = True  # set True to kill while loop
+    print time.strftime("%H:%M", time.localtime())
 
     
             
@@ -129,6 +130,7 @@ while flag != True:
 # tells it to begin ramping the temperature to the target_temp.
 print "****************************************************"
 print "****************************************************"
+print time.strftime("%H:%M", time.localtime())
 print "Initial temperature %2.2f C reached" % init_temp
 print "Consider turning ANOVA cooling rate down to minimum"
 print ""
