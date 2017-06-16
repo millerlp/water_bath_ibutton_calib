@@ -82,7 +82,7 @@ flag = False  # set the while-loop flag
 init_temp = 5 # define the initial temperature, degrees Celsius
 
 print "+++++++++++++++++++++++++++++"
-print "Ramp will start at %1.0f C" % init_temp
+print "Ramp will start at %1.1f C" % init_temp
 print "+++++++++++++++++++++++++++++"
 
 bath.write("start\r")
@@ -106,7 +106,7 @@ while flag != True:
     if (abs(response - init_temp) < 0.001):
         print "Setpoint set: %2.2f C" % response
         flag = True  # set True to kill while loop
-    print time.strftime("%H:%M", time.localtime())
+    print "Current time: %s" % time.strftime("%H:%M", time.localtime())
 
     
             
@@ -130,7 +130,7 @@ while flag != True:
 # tells it to begin ramping the temperature to the target_temp.
 print "****************************************************"
 print "****************************************************"
-print time.strftime("%H:%M", time.localtime())
+print "Current time: %s" % time.strftime("%H:%M", time.localtime())
 print "Initial temperature %2.2f C reached" % init_temp
 print "Consider turning ANOVA cooling rate down to minimum"
 print ""
@@ -158,8 +158,7 @@ for i in range(len(calib_temps)):
     bath.write(command) # change set point
     response = bath.readline() # clear buffer response from bath
     # Notify user of current target setpoint
-    print "Current set point: %2.2f C" % current_set
-    print time.strftime("%H:%M", time.localtime())
+    print "Current set point: %2.2f C, %s" % (current_set,time.strftime("%H:%M", time.localtime()))
     
         # Loop until the temperature gets close to the target temperature
     flag = False # set initial flag
