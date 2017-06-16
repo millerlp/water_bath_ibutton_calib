@@ -121,7 +121,8 @@ while flag != True:
     # The response here will need to be parsed to remove the echoed
     # command. It will look like ['temp\r 21.00\r']
     response = float(re.search(r'[0-9.]{4,}',response[0]).group())
-    print "Current bath temp: %2.2f C" % response
+    currtime = time.strftime("%H:%M:%S", time.localtime())
+    print "Current bath temp: %2.2f C, time: %s" % (response,currtime)
     # When the bath temperature gets within 0.05 of the target, we're 
     # close enough
     if (abs(init_temp - response) < 0.05):
