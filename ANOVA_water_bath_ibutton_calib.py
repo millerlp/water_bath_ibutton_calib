@@ -171,15 +171,34 @@ for i in range(len(calib_temps)):
         if (abs(current_set - response) < 0.05):
             flag = True  # set True to kill while loop
     
-    # Print time that we reached setpoint
+    flag = False
+    checkCounter = 0
+        # Check that the temperature is actually stable
+    while flag != True:
+        time.sleep(10)
+        bath.write("temp\r") # Query current bath temperature
+        response = bath.readlines() # get response
+        # Parse the response, which will have a temperature value in it
+        # in the form ['temp\r 21.46\r']
+        response = float(re.search(r'[0-9.]{4,}',response[0]).group())
+        # Check that temperature is still close to current_set temperature        
+        if (abs(current_set - response) < 0.05):
+                checkCounter = checkCounter + 1
+                if checkCounter > 18: # 18 10-second sleeps = 3 minutes
+                        flag = True # set True to kill while loop
+        else if (abs(current_set - response) > 0.05):
+                checkCounter = 0 # Reset if temperature has drifted
+
+
+    # Print time that we achieved stable setpoint
     print "Current bath temp: %2.2f C" % response
     print time.strftime("%H:%M", time.localtime())
     row = [current_set,time.strftime("%Y-%m-%d %H:%M", time.localtime())]
     writer.writerow(row) # write temp and time to csv output file
-    # Now sleep for ten minutes
-    time.sleep(600)
+    # Now sleep for five minutes
+    time.sleep(300)
     
-    # After ten minutes, go to the next step of the for loop to move to a new 
+    # After five minutes, go to the next step of the for loop to move to a new 
     # temperature
 
 print "Finished"
