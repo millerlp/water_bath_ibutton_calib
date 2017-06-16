@@ -1,7 +1,7 @@
 '''
-Run a temperature ramp on a ANOVA A-series water bath (blue) over
+Run a temperature ramp on a ANOVA A-series water bath over
 RS232. The routine will stop at each temperature in the array 'calib_temps' for
-10 minutes, then move on to the next. It will save the timestamps of the
+5 minutes, then move on to the next. It will save the timestamps of the
 timepoints when each calibration temperature is achieved into a csv file.
 
 Set ibuttons to record a temperature every minute.
@@ -87,7 +87,7 @@ print "+++++++++++++++++++++++++++++"
 
 bath.write("start\r")
 response = bath.readlines()
-time.sleep(5)
+time.sleep(1)
 
 
 while flag != True:
@@ -96,7 +96,7 @@ while flag != True:
     command = "set temp " + "%2.2f\r" % init_temp 
     bath.write(command)
     response = bath.readlines()  # always read the response to clear the buffer
-    time.sleep(0.01)
+    time.sleep(0.2)
     # Now check that the set point worked
     bath.write("get temp setting\r")
     response = bath.readlines()
