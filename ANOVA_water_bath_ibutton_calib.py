@@ -198,11 +198,11 @@ for i in range(len(calib_temps)):
 
 
     # Print time that we achieved stable setpoint
-    print "Stable bath temp: %2.2f C" % response
-    print time.strftime("%H:%M", time.localtime())
+    currtime = time.strftime("%H:%M:%S", time.localtime())
+    print "Stable bath temp: %2.2f C at time %s" % (response,currtime)
     print "Time and temp recorded to file, pausing here for 5 minutes"
     print "to let datalogger gather readings"
-    row = [current_set,time.strftime("%Y-%m-%d %H:%M", time.localtime())]
+    row = [current_set,time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())]
     writer.writerow(row) # write temp and time to csv output file
     # Now sleep for five minutes
     time.sleep(300)
