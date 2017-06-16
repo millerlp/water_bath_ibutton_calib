@@ -151,7 +151,7 @@ writer.writerow(headers) # write header to output file
 
 ################################################################################
 # Step through each temperature in the calib_temps array, stopping at each for
-# 10 minutes to ensure stable ibutton temperatures. 
+# 5 minutes to ensure stable ibutton temperatures. 
 for i in range(len(calib_temps)):
     current_set = calib_temps[i] # extract temperature
     command = "set temp " + "%2.2f\r" % current_set # assemble command
@@ -159,6 +159,7 @@ for i in range(len(calib_temps)):
     response = bath.readline() # clear buffer response from bath
     # Notify user of current target setpoint
     print "Current set point: %2.2f C" % current_set
+    print time.strftime("%H:%M", time.localtime())
     
         # Loop until the temperature gets close to the target temperature
     flag = False # set initial flag
