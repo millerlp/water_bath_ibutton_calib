@@ -130,6 +130,7 @@ while flag != True:
 print "****************************************************"
 print "****************************************************"
 print "Initial temperature %2.2f C reached" % init_temp
+print "Consider turning ANOVA cooling rate down to minimum"
 print ""
 junk = raw_input("Press return to start temperature ramp") # pauses here
 print "Starting temperature ramp"
@@ -194,8 +195,10 @@ for i in range(len(calib_temps)):
 
 
     # Print time that we achieved stable setpoint
-    print "Current bath temp: %2.2f C" % response
+    print "Stable bath temp: %2.2f C" % response
     print time.strftime("%H:%M", time.localtime())
+    print "Time and temp recorded to file, pausing here for 5 minutes"
+    print "to let datalogger gather readings"
     row = [current_set,time.strftime("%Y-%m-%d %H:%M", time.localtime())]
     writer.writerow(row) # write temp and time to csv output file
     # Now sleep for five minutes
