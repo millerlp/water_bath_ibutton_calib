@@ -185,10 +185,12 @@ for i in range(len(calib_temps)):
         # Check that temperature is still close to current_set temperature        
         if (abs(current_set - response) <= 0.03):
                 checkCounter = checkCounter + 1
+                print "Stable at %2.2f" % response
                 if checkCounter > 18: # 18 10-second sleeps = 3 minutes
                         flag = True # set True to kill while loop
         elif (abs(current_set - response) > 0.03):
                 checkCounter = 0 # Reset if temperature has drifted
+                print "Waiting to re-stabilize at %2.2f" % current_set
 
 
     # Print time that we achieved stable setpoint
