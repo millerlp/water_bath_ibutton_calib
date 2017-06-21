@@ -10,7 +10,7 @@ models).
 `ANOVA_water_bath_tc_calib.py` should work with modern
 A-series water baths from http://www.waterbaths.com
 
-`water_bath_ibutton_calib.py` should work with old Cole-Parmer Polystat
+`CP_water_bath_ibutton_calib.py` should work with old Cole-Parmer Polystat
 waterbaths from the early 2000's. 
 
 The scripts will set the water bath to a low starting temperature and
